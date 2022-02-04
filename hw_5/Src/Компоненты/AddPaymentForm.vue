@@ -51,14 +51,6 @@ export default {
     showElement(){
       this.isVisiable=!this.isVisiable
     },
-     addFromLink() {
-      this.category = this.$route.params.category;
-      this.value = this.$route.query.value;
-      if (this.category && this.value) {
-         this.date = Date.now()
-        this.onSaveClick();
-      }
-    },
   },
   async created() {
     if(!this.options.length) {
@@ -66,8 +58,18 @@ export default {
     }
     this.category = this.options[0]
   },
-   mounted() {
-     this.addFromLink()
+  mounted() {
+    if(this.$route.params.category) {
+      this.category = this.$route.params.category
+    }
+    if(this.$route.query.value) {
+      this.value = this.$route.query.value
+    }
+    
+    if(this.value && this.category) {
+      this.date = Date.now()
+      this.onSaveClick()
+    }
   },
 };
 </script>
