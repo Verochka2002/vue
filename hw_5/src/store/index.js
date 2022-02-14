@@ -27,22 +27,22 @@ export const localDB = {
 
 export default new Vuex.Store({
   state: {
-    paymentsList:[],
-    //paymentsListIDS:[],
+    //paymentsList:[],
+    paymentsListIDS:[],
     categoryList:[],
     pageCount:1
   },
   mutations: {
     setPamentsListData(state, payload){
-      state.paymentsList = payload
-      // const newUniqObjs = payload.filter(obj=>{
-      //   return state.paymentsListIDS.indexOf(obj.id) < 0
-      // })
+      //state.paymentsList = payload
+       const newUniqObjs = payload.filter(obj=>{
+         return state.paymentsListIDS.indexOf(obj.id) < 0
+       })
 
-      // const uniqIds = newUniqObjs.map(obj=>obj.id)
+       const uniqIds = newUniqObjs.map(obj=>obj.id)
 
-      // state.paymentsListIDS.push(...uniqIds)
-      // state.paymentsList.push(...newUniqObjs)
+       state.paymentsListIDS.push(...uniqIds)
+       state.paymentsList.push(...newUniqObjs)
 
     },
     addDataToPaymentsList(state, data){
@@ -56,33 +56,33 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    // fetchData({commit}, page){
-    //    return new Promise((resolve)=>{
-    //        setTimeout(()=>{
-    //         const items = localDB[`page${page}`]
-    //         resolve(items)
-    //       }, 1000)
-    //     })
-    //     .then(res=> commit('setPamentsListData', res))
-    //   },
-    fetchData({commit}){
-       return new Promise((resolve)=>{
-         setTimeout(()=>{
-           const items= []
-           for(let i= 1; i< 101; i++){
-             items.push({
-               date: Date.now(),
-               category: 'Food',
-              id: i,
-               value: i
-            })
-           }
-          resolve(items)
-         }, 1500)
-       }).then(res=>{
-         commit('setPamentsListData', res)
-       })
-     },
+     fetchData({commit}, page){
+        return new Promise((resolve)=>{
+            setTimeout(()=>{
+             const items = localDB[`page${page}`]
+             resolve(items)
+           }, 1000)
+         })
+         .then(res=> commit('setPamentsListData', res))
+       },
+    //fetchData({commit}){
+    //   return new Promise((resolve)=>{
+    //     setTimeout(()=>{
+    //       const items= []
+    //       for(let i= 1; i< 101; i++){
+    //         items.push({
+    //           date: Date.now(),
+    //           category: 'Food',
+    //          id: i,
+    //           value: i
+    //        })
+    //       }
+    //      resolve(items)
+    //     }, 1500)
+    //   }).then(res=>{
+    //     commit('setPamentsListData', res)
+    //   })
+    // },
     loadCategories ({ commit }) {
       return new Promise((resolve) => {
         // имитируем работу с сетью
